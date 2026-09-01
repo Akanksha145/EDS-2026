@@ -1,0 +1,101 @@
+.image-compare > div {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+}
+
+.image-compare .image-compare-base,
+.image-compare .image-compare-overlay {
+  position: relative;
+  grid-area: 1 / 1;
+}
+
+.image-compare picture,
+.image-compare img {
+  display: block;
+  width: 100%;
+}
+
+.image-compare .image-compare-overlay {
+  clip-path: inset(0 calc(100% - var(--image-compare-position, 50%)) 0 0);
+  border-right: 1px solid rgb(255 255 255 / 40%);
+}
+
+.image-compare-caption {
+  position: absolute;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: calc(50% - 32px);
+  padding: 12px 20px;
+  border-radius: 4px;
+  text-align: center;
+  background-color: rgb(0 0 0 / 35%);
+  color: var(--light-color);
+}
+
+.image-compare-base .image-compare-caption {
+  right: 16px;
+}
+
+.image-compare-overlay .image-compare-caption {
+  left: 16px;
+}
+
+.image-compare-caption h1,
+.image-compare-caption h2,
+.image-compare-caption h3,
+.image-compare-caption h4,
+.image-compare-caption h5,
+.image-compare-caption h6,
+.image-compare-caption p {
+  margin: 0;
+  color: inherit;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+}
+
+.image-compare-caption .button-wrapper {
+  margin: 0;
+}
+
+.image-compare:hover .image-compare-overlay {
+  border-right-color: rgb(255 255 255 / 80%);
+}
+
+.image-compare-slider {
+  grid-area: 1 / 1;
+  z-index: 1;
+  align-self: center;
+  width: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+}
+
+.image-compare-slider::-webkit-slider-runnable-track,
+.image-compare-slider::-moz-range-track {
+  background: transparent;
+}
+
+.image-compare-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--light-color);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+  cursor: pointer;
+}
+
+.image-compare-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--light-color);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+  cursor: pointer;
+}
