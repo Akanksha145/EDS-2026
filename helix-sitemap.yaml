@@ -1,4 +1,5 @@
 sitemaps:
   default:
+    origin: https://main--eds-2026--akanksha145.aem.live
     source: /query-index.json
     destination: /sitemap.xml
