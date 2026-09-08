@@ -1,0 +1,138 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "about-us",
+      "urls": [
+        "https://wknd-trendsetters.site/about-us"
+      ],
+      "representativeUrl": "https://wknd-trendsetters.site/about-us",
+      "description": "About Us page: intro banner, article header, image gallery, team testimonial tabs, latest articles cards, FAQ accordion, and a closing CTA hero banner.",
+      "urlPattern": "/*",
+      "blocks": [
+        {
+          "name": "columns-intro",
+          "instances": [
+            "#main-content > header.section.secondary-section > div.container > div.grid-layout.tablet-1-column.grid-gap-xxl"
+          ]
+        },
+        {
+          "name": "columns-article",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout.tablet-1-column.grid-gap-lg"
+          ]
+        },
+        {
+          "name": "cards-gallery",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-sm"
+          ]
+        },
+        {
+          "name": "tabs-team",
+          "instances": [
+            "#main-content > section.section:nth-of-type(3) > div.container > div.tabs-wrapper"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md"
+          ]
+        },
+        {
+          "name": "accordion-faq",
+          "instances": [
+            "#main-content > section.section:nth-of-type(5) div.faq-list"
+          ]
+        },
+        {
+          "name": "hero-overlay",
+          "instances": [
+            "#main-content > section.section.inverse-section > div.container > div.grid-layout.desktop-1-column"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Intro banner",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "secondary",
+          "blocks": [
+            "columns-intro"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc2",
+          "name": "Article header",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": null,
+          "blocks": [
+            "columns-article"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Style in every snapshot gallery",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
+          "style": "secondary",
+          "blocks": [
+            "cards-gallery"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.utility-text-align-center.utility-margin-bottom-8rem"
+          ]
+        },
+        {
+          "id": "rc4",
+          "name": "Team testimonials",
+          "selector": "#main-content > section.section:nth-of-type(3)",
+          "style": null,
+          "blocks": [
+            "tabs-team"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc5",
+          "name": "Latest articles",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(4)",
+          "style": "secondary",
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.utility-text-align-center"
+          ]
+        },
+        {
+          "id": "rc6",
+          "name": "FAQ",
+          "selector": "#main-content > section.section:nth-of-type(5)",
+          "style": null,
+          "blocks": [
+            "accordion-faq"
+          ],
+          "defaultContent": [
+            "#main-content > section.section:nth-of-type(5) > div.container > div.grid-layout.tablet-1-column.grid-gap-xxl"
+          ]
+        },
+        {
+          "id": "rc7",
+          "name": "Closing CTA banner",
+          "selector": "#main-content > section.section.inverse-section",
+          "style": null,
+          "blocks": [
+            "hero-overlay"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

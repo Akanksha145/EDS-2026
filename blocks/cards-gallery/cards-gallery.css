@@ -1,0 +1,51 @@
+/* cards-gallery -- image-only gallery grid.
+ * Source: .grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-sm
+ * Extracted from source computed styles (see migration-work/cards-gallery-extracted.css).
+ * Sits in a light-grey ("secondary") section handled by global styles.
+ */
+
+.cards-gallery > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+
+  /* mobile-first: 1 column (source mobile-portrait-1-column) */
+  grid-template-columns: 1fr;
+  gap: 0.75rem; /* source .grid-gap-sm -> --space-sm: .75rem (12px) */
+}
+
+/* tablet: 2 columns (source tablet-2-column-1, active up to 991px) */
+@media (width >= 768px) {
+  .cards-gallery > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* desktop: 4 columns (source desktop-4-column, active from 992px) */
+@media (width >= 992px) {
+  .cards-gallery > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cards-gallery > ul > li {
+  margin: 0;
+}
+
+/* image cell -- square 1:1 cover images (source .utility-aspect-1x1 + .cover-image) */
+.cards-gallery .cards-gallery-card-image {
+  line-height: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.cards-gallery .cards-gallery-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* no captions/text in this gallery -- collapse the empty body cell */
+.cards-gallery .cards-gallery-card-body:empty {
+  display: none;
+}

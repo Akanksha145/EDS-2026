@@ -1,0 +1,62 @@
+/* columns-article -- article header: cover image + breadcrumb/heading/byline
+ * Design extracted from source computed styles:
+ * https://wknd-trendsetters.site/about-us  (.grid-layout.tablet-1-column.grid-gap-lg)
+ */
+
+/* Row: stacked on mobile, 2-col grid on desktop (source: repeat(2,1fr), gap 24px, align-items center) */
+.columns-article > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px; /* --space-lg = 1.5rem */
+  align-items: center;
+}
+
+/* Cover image (source: .cover-image.utility-aspect-3x2, radius 20px) */
+.columns-article .columns-article-img-col picture {
+  display: block;
+  width: 100%;
+}
+
+.columns-article .columns-article-img-col img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px; /* --radius-card = 1.25rem */
+}
+
+/* Heading (source: .h2-heading -> text-4xl, Syncopate 700, uppercase, line-height 1.1) */
+.columns-article h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  font-size: 28px; /* mobile: source text-4xl 24-32px range */
+  color: var(--text-color);
+}
+
+/* Byline metadata (source: .paragraph-sm -> 14px / line-height 1.6) */
+.columns-article h2 + p {
+  margin: 16px 0 0; /* wrapper margin-top --space-md = 1rem */
+  font-size: 14px; /* --text-sm = 0.875rem */
+  line-height: 1.6; /* --leading-normal */
+  color: var(--text-color); /* author name emphasis (black) */
+}
+
+.columns-article h2 + p + p {
+  margin: 8px 0 0; /* second row margin-top 0.5rem */
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--link-color); /* date / read-time secondary (#666) */
+}
+
+@media (width >= 900px) {
+  .columns-article > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .columns-article h2 {
+    font-size: 40px; /* source desktop text-4xl = 2.5rem */
+  }
+}

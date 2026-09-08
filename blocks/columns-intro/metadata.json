@@ -1,0 +1,37 @@
+{
+  "variantName": "columns-intro",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-09-08T11:18:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd-trendsetters.site/about-us",
+    "originPage": "about-us",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "intro",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "heading + subheading + 2 CTAs + stacked images",
+    "buttonCount": 2,
+    "imageCount": 3
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "page intro banners with text and side images",
+      "two-column marketing intros"
+    ],
+    "notSuitableFor": [
+      "article header rows",
+      "dark full-bleed banners"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/about-us"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-08T11:18:00.000Z"
+  }
+}

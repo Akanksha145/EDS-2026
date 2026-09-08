@@ -1,0 +1,69 @@
+/*
+ * accordion-faq block
+ * Design source: https://wknd-trendsetters.site/about-us (.faq-list)
+ * Values extracted from the source compiled stylesheet and resolved from
+ * the source design tokens (see migration-work/accordion-faq-extracted.css).
+ */
+
+.accordion-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* --space-xs */
+}
+
+.accordion-faq .accordion-faq-item {
+  border: 1px solid #e8e8e8; /* --color-gray-200 */
+  border-radius: 16px; /* --radius-lg */
+  overflow: hidden;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion-faq .accordion-faq-item-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 32px; /* --space-lg --space-xl */
+  font-family: var(--body-font-family);
+  font-size: 18px; /* --text-lg */
+  font-weight: 600;
+  line-height: 1.6;
+  list-style: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.accordion-faq .accordion-faq-item-label:hover {
+  background-color: #f5f5f5; /* --color-gray-100 */
+}
+
+.accordion-faq .accordion-faq-item-label::-webkit-details-marker {
+  display: none;
+}
+
+/* plus icon that rotates 45deg to an X when open (matches source .faq-icon) */
+.accordion-faq .accordion-faq-item-label::after {
+  content: '';
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background:
+    linear-gradient(currentcolor, currentcolor) center / 2px 20px no-repeat,
+    linear-gradient(currentcolor, currentcolor) center / 20px 2px no-repeat;
+  transition: transform 0.3s ease;
+}
+
+.accordion-faq .accordion-faq-item[open] .accordion-faq-item-label::after {
+  transform: rotate(45deg);
+}
+
+.accordion-faq .accordion-faq-item-body {
+  padding: 0 32px 32px; /* 0 --space-xl --space-xl */
+  color: #404040; /* --color-gray-700 */
+  font-size: 16px; /* source answer inherits base --text-base */
+  line-height: 1.7;
+}
+
+.accordion-faq .accordion-faq-item-body p {
+  margin: 0;
+}
