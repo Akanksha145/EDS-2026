@@ -368,6 +368,21 @@ main .section.inverse-section {
   padding: var(--section-padding) 0;
 }
 
+main .section.accent,
+main .section.accent-section {
+  background-color: var(--brand-accent);
+  color: #000;
+  margin: 0;
+  padding: var(--section-padding) 0;
+}
+
+main .section.accent > .default-content-wrapper,
+main .section.accent-section > .default-content-wrapper {
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
 main .section.dark h1,
 main .section.dark h2,
 main .section.dark h3,

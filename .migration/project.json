@@ -7,5 +7,8 @@
       "contentHostUrl": "https://content.da.live/akanksha145/eds-2026/",
       "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
     }
-  }
+  },
+  "features": [
+    "site-planning"
+  ]
 }

@@ -14,9 +14,10 @@ export default function parse(element, { document }) {
     return;
   }
 
-  // The breadcrumb uses inline base64-SVG chevrons as separators; those would
-  // import as broken images. Strip the <img> separators, keeping the text links.
-  element.querySelectorAll('.breadcrumbs img').forEach((img) => img.remove());
+  // The breadcrumb uses SVG chevrons as separators (inline <svg> or base64
+  // <img> depending on the page); those would import as broken/empty images.
+  // Strip both, keeping the text links.
+  element.querySelectorAll('.breadcrumbs img, .breadcrumbs svg').forEach((sep) => sep.remove());
 
   // Each direct child div becomes a column cell in a single content row.
   const row = columns.map((col) => {
