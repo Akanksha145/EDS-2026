@@ -11,17 +11,17 @@
   flex-direction: column;
 }
 
-.tabs-team .tabs-team-panel {
+.tabs-team .tabs-team-body {
   order: 1;
 }
 
 /* ---------- Panels (active testimonial) ---------- */
-.tabs-team .tabs-team-panel[aria-hidden='true'] {
+.tabs-team .tabs-team-body[aria-hidden='true'] {
   display: none;
 }
 
 /* Panel content cell: mobile-first single column, image then text. */
-.tabs-team .tabs-team-panel > div {
+.tabs-team .tabs-team-body > div {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
@@ -29,20 +29,20 @@
 }
 
 /* First paragraph holds the member image (EDS wraps picture in <p>). */
-.tabs-team .tabs-team-panel > div > p:first-child {
+.tabs-team .tabs-team-body > div > p:first-child {
   margin: 0;
   aspect-ratio: 4 / 3;
   border-radius: 20px;
   overflow: hidden;
 }
 
-.tabs-team .tabs-team-panel > div > p:first-child picture {
+.tabs-team .tabs-team-body > div > p:first-child picture {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.tabs-team .tabs-team-panel > div > p:first-child img {
+.tabs-team .tabs-team-body > div > p:first-child img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -50,18 +50,18 @@
 }
 
 /* Member name (bold). */
-.tabs-team .tabs-team-panel > div > p:nth-child(2) {
+.tabs-team .tabs-team-body > div > p:nth-child(2) {
   margin: 0;
   font-size: 20px; /* source paragraph-xl */
   line-height: 1.6;
 }
 
-.tabs-team .tabs-team-panel > div > p:nth-child(2) strong {
+.tabs-team .tabs-team-body > div > p:nth-child(2) strong {
   font-weight: 700;
 }
 
 /* Role subtitle. */
-.tabs-team .tabs-team-panel > div > p:nth-child(3) {
+.tabs-team .tabs-team-body > div > p:nth-child(3) {
   margin: 0 0 32px;
   font-size: 16px;
   line-height: 1.6;
@@ -69,7 +69,7 @@
 }
 
 /* Testimonial quote. */
-.tabs-team .tabs-team-panel > div > p:last-child {
+.tabs-team .tabs-team-body > div > p:last-child {
   margin: 0 0 48px;
   font-size: 20px;
   line-height: 1.6;
@@ -171,19 +171,19 @@
 
 /* ---------- Desktop ---------- */
 @media (width >= 900px) {
-  .tabs-team .tabs-team-panel > div {
+  .tabs-team .tabs-team-body > div {
     grid-template-columns: 1fr 1fr;
   }
 
   /* Image occupies column 1 across all text rows; text stacks in column 2. */
-  .tabs-team .tabs-team-panel > div > p:first-child {
+  .tabs-team .tabs-team-body > div > p:first-child {
     grid-column: 1;
     grid-row: 1 / span 3;
   }
 
-  .tabs-team .tabs-team-panel > div > p:nth-child(2),
-  .tabs-team .tabs-team-panel > div > p:nth-child(3),
-  .tabs-team .tabs-team-panel > div > p:last-child {
+  .tabs-team .tabs-team-body > div > p:nth-child(2),
+  .tabs-team .tabs-team-body > div > p:nth-child(3),
+  .tabs-team .tabs-team-body > div > p:last-child {
     grid-column: 2;
   }
 
