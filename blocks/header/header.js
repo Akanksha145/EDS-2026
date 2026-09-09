@@ -232,8 +232,18 @@ function decorateTopLevelItem(li, nav) {
   const item = document.createElement('li');
   item.className = 'nav-menu-item';
 
-  const directLink = li.querySelector(':scope > a');
   const submenu = li.querySelector(':scope > ul');
+  // A top-level link may be a direct child (<li><a>) or wrapped in a single
+  // paragraph (<li><p><a>) — Document Authoring serializes a bare link in a
+  // list item as the latter. Treat both as a plain navigable link.
+  let directLink = li.querySelector(':scope > a');
+  if (!directLink) {
+    const soleP = li.querySelector(':scope > p');
+    const pLink = soleP ? soleP.querySelector(':scope > a') : null;
+    if (soleP && pLink && soleP.textContent.trim() === pLink.textContent.trim()) {
+      directLink = pLink;
+    }
+  }
   const labelSource = li.querySelector(':scope > p') || directLink;
   const labelText = labelSource ? labelSource.textContent.trim() : '';
 
