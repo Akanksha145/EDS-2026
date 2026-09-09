@@ -1,0 +1,198 @@
+/* Block: tabs-team -- team / testimonial tabbed panels.
+   Values extracted from source computed styles (wknd-trendsetters.site/about-us).
+   Source tokens: radius-card 20px, radius-lg 16px, space-md 16px,
+   space-xl 32px, space-2xl 48px, gray-200 #e8e8e8, gray-300 #d4d4d4,
+   gray-100 #f5f5f5, text-xl 20px, text-sm 14px, leading-normal 1.6. */
+
+/* Block is a vertical stack. In the source the testimonial content sits
+   ABOVE the avatar tab row; EDS prepends the tablist, so reorder with flex. */
+.tabs-team {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs-team .tabs-team-body {
+  order: 1;
+}
+
+/* ---------- Panels (active testimonial) ---------- */
+.tabs-team .tabs-team-body[aria-hidden='true'] {
+  display: none;
+}
+
+/* Panel content cell: mobile-first single column, image then text. */
+.tabs-team .tabs-team-body > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* Text column: name, role, quote stacked together at the top. */
+.tabs-team .tabs-team-panel-text {
+  display: block;
+}
+
+.tabs-team .tabs-team-panel-text p {
+  margin: 0;
+}
+
+/* Member name (bold). */
+.tabs-team .tabs-team-panel-text > p:first-child {
+  font-size: 20px; /* source paragraph-xl */
+  line-height: 1.6;
+}
+
+.tabs-team .tabs-team-panel-text > p:first-child strong {
+  font-weight: 700;
+}
+
+/* Role subtitle. */
+.tabs-team .tabs-team-panel-text > p:nth-child(2) {
+  margin: 0 0 32px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* Testimonial quote. */
+.tabs-team .tabs-team-panel-text > p:last-child {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* First paragraph holds the member image (EDS wraps picture in <p>). */
+.tabs-team .tabs-team-body > div > p:first-child {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.tabs-team .tabs-team-body > div > p:first-child picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tabs-team .tabs-team-body > div > p:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Tab selector row ---------- */
+.tabs-team .tabs-team-list {
+  order: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Button contains: avatar <p><picture>, name <p><strong>, role <p>.
+   Lay out as avatar (left) + name/role stacked (right) like the source:
+   flex-horizontal y-center flex-gap-xs = flex row, align-items center, gap 8px. */
+.tabs-team .tabs-team-list button.tabs-team-tab {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  column-gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  background-color: #efefef; /* source inactive tab fill */
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.tabs-team .tabs-team-list button.tabs-team-tab p {
+  margin: 0;
+}
+
+/* Avatar thumbnail: 48px circle in column 1, spanning both text rows. */
+.tabs-team .tabs-team-list button.tabs-team-tab > p:first-child {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.tabs-team .tabs-team-list button.tabs-team-tab > p:first-child picture,
+.tabs-team .tabs-team-list button.tabs-team-tab > p:first-child img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Name (bold) in column 2, row 1. */
+.tabs-team .tabs-team-list button.tabs-team-tab > p:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 14px;
+}
+
+.tabs-team .tabs-team-list button.tabs-team-tab > p:nth-child(2) strong {
+  font-weight: 700;
+}
+
+/* Role (muted subtitle) in column 2, row 2. */
+.tabs-team .tabs-team-list button.tabs-team-tab > p:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-color);
+}
+
+.tabs-team .tabs-team-list button.tabs-team-tab:hover {
+  border-color: #d4d4d4;
+}
+
+.tabs-team .tabs-team-list button.tabs-team-tab[aria-selected='true'] {
+  border-color: var(--brand-dark);
+  background-color: var(--brand-light);
+}
+
+/* ---------- Tablet ---------- */
+@media (width >= 600px) {
+  .tabs-team .tabs-team-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---------- Desktop ---------- */
+@media (width >= 900px) {
+  .tabs-team .tabs-team-body > div {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+
+  /* Image in column 1, member text stacked in column 2. */
+  .tabs-team .tabs-team-body > div > p:first-child {
+    grid-column: 1;
+  }
+
+  .tabs-team .tabs-team-panel-text {
+    grid-column: 2;
+  }
+
+  .tabs-team .tabs-team-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -164,6 +164,12 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    // blog-article template: long-form article pages live under /blog/<slug>.
+    // Scope article-body typography (measure, prose rhythm, blockquote, spec
+    // table) to this class so other templates are unaffected.
+    if (window.location.pathname.startsWith('/blog/')) {
+      main.classList.add('blog-article');
+    }
     decorateMain(main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);

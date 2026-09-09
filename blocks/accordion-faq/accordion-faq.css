@@ -1,0 +1,145 @@
+/*
+ * accordion-faq block
+ * Design source: https://wknd-trendsetters.site/about-us (.faq-list)
+ * Values extracted from the source compiled stylesheet and resolved from
+ * the source design tokens (see migration-work/accordion-faq-extracted.css).
+ */
+
+.accordion-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* --space-xs */
+}
+
+/*
+ * Standalone /faq accordion (no heading column): the source centers the list
+ * in a 768px-wide column (max-width 768px + 24px side padding => 720px items),
+ * NOT full page width. Scope to accordion sections without a default-content
+ * intro so the two-column about-us/homepage layout is unaffected.
+ */
+main .section.accordion-faq-container:not(:has(.default-content-wrapper)) .accordion-faq {
+  max-width: 768px;
+  padding: 0 24px;
+  margin-inline: auto;
+}
+
+/*
+ * Two-column FAQ section layout (source: .grid-layout.tablet-1-column.grid-gap-xxl).
+ * On desktop the section heading/intro sits in the left column and the accordion
+ * in the right column, split 1fr/1fr with a 64px (--space-xxl) gap, aligned to top.
+ * Scoped to sections that pair a default-content-wrapper with the accordion so the
+ * standalone /faq accordion (no heading column) is unaffected.
+ * Mobile stays single-column (source collapses via tablet-1-column).
+ */
+@media (width >= 900px) {
+  main .section.accordion-faq-container:has(.default-content-wrapper) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px; /* --space-xxl */
+    align-items: start;
+    max-width: var(--content-max-width, 1200px);
+    margin-inline: auto;
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  main .section.accordion-faq-container:has(.default-content-wrapper) > div {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.accordion-faq .accordion-faq-item {
+  border: 1px solid #e8e8e8; /* --color-gray-200 */
+  border-radius: 16px; /* --radius-lg */
+  overflow: hidden;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion-faq .accordion-faq-item-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 32px; /* --space-lg --space-xl */
+  font-family: var(--body-font-family);
+  font-size: 18px; /* --text-lg */
+  font-weight: 600;
+  line-height: 1.6;
+  list-style: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+/* the label text is wrapped in a <p>; strip default margins so the row
+ * height matches the source (source uses a bare <span>) */
+.accordion-faq .accordion-faq-item-label p {
+  margin: 0;
+}
+
+.accordion-faq .accordion-faq-item-label:hover {
+  background-color: #f5f5f5; /* --color-gray-100 */
+}
+
+.accordion-faq .accordion-faq-item-label::-webkit-details-marker {
+  display: none;
+}
+
+/* plus icon that rotates 45deg to an X when open (matches source .faq-icon) */
+.accordion-faq .accordion-faq-item-label::after {
+  content: '';
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background:
+    linear-gradient(currentcolor, currentcolor) center / 2px 20px no-repeat,
+    linear-gradient(currentcolor, currentcolor) center / 20px 2px no-repeat;
+  transition: transform 0.3s ease;
+}
+
+.accordion-faq .accordion-faq-item[open] .accordion-faq-item-label::after {
+  transform: rotate(45deg);
+}
+
+.accordion-faq .accordion-faq-item-body {
+  padding: 0 32px 32px; /* 0 --space-xl --space-xl */
+  color: #404040; /* --color-gray-700 */
+  font-size: 16px; /* source answer inherits base --text-base */
+  line-height: 1.7;
+}
+
+.accordion-faq .accordion-faq-item-body p {
+  margin: 0;
+}
+
+/*
+ * Two-column FAQ section layout (matches source .grid-layout.tablet-1-column):
+ * when the accordion section also has a default-content intro (heading +
+ * subtitle), lay the intro on the left and the accordion on the right.
+ * Scoped to sections that contain BOTH the intro and the accordion, so the
+ * standalone /faq accordion (no default-content-wrapper) is unaffected.
+ */
+main .section.accordion-faq-container:has(> .default-content-wrapper):has(> .accordion-faq-wrapper) {
+  display: grid;
+  gap: 40px;
+  max-width: var(--content-max-width, 1200px);
+  margin: 0 auto;
+  padding: var(--section-padding) 24px;
+  align-items: start;
+}
+
+main .section.accordion-faq-container:has(> .default-content-wrapper):has(> .accordion-faq-wrapper) > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (width >= 900px) {
+  main .section.accordion-faq-container:has(> .default-content-wrapper):has(> .accordion-faq-wrapper) {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px; /* --space-xxl */
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+}

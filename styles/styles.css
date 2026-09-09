@@ -1,3 +1,5 @@
+@import url('brand.css');
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -11,30 +13,30 @@
  */
 
 :root {
-  /* colors */
+  /* colors (brand values, see brand.css) */
   --background-color: #fff;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #1d1d1d;
-  --link-color: #3b63fb;
-  --link-hover-color: red;
+  --light-color: #f5f5f5;
+  --dark-color: #000;
+  --text-color: #000;
+  --link-color: #666;
+  --link-hover-color: #000;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* fonts (brand values, see brand.css) */
+  --body-font-family: "instrument sans", instrument-sans-fallback, sans-serif;
+  --heading-font-family: syncopate, syncopate-fallback, sans-serif;
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* body sizes (mobile-first) */
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* heading sizes (mobile-first, brand mobile scale) */
+  --heading-font-size-xxl: 36px;
+  --heading-font-size-xl: 28px;
+  --heading-font-size-l: 24px;
+  --heading-font-size-m: 20px;
+  --heading-font-size-s: 18px;
+  --heading-font-size-xs: 16px;
 
   /* nav height */
   --nav-height: 64px;
@@ -42,31 +44,26 @@
 
 /* fallback fonts */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
+  font-family: syncopate-fallback;
+  size-adjust: 95%;
   src: local('Arial');
 }
 
 @font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
+  font-family: instrument-sans-fallback;
+  size-adjust: 100%;
   src: local('Arial');
 }
 
 @media (width >= 900px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    /* heading sizes (desktop brand scale) */
+    --heading-font-size-xxl: var(--heading-size-xxl, 56px);
+    --heading-font-size-xl: var(--heading-size-xl, 40px);
+    --heading-font-size-l: var(--heading-size-l, 32px);
+    --heading-font-size-m: var(--heading-size-m, 28px);
+    --heading-font-size-s: var(--heading-size-s, 22px);
+    --heading-font-size-xs: var(--heading-size-xs, 18px);
   }
 }
 
@@ -107,8 +104,10 @@ h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: var(--heading-font-weight, 700);
+  line-height: var(--heading-line-height, 1.1);
+  text-transform: var(--heading-text-transform, uppercase);
+  color: var(--text-color);
   scroll-margin: 40px;
 }
 
@@ -147,7 +146,7 @@ main > div {
 }
 
 main > .section.light-grey {
-  background-color: #e4e4e4;
+  background-color: var(--brand-light);
 }
 
 input,
@@ -162,6 +161,7 @@ a:any-link {
   color: var(--link-color);
   text-decoration: none;
   overflow-wrap: break-word;
+  transition: color 0.15s;
 }
 
 a:hover {
@@ -169,12 +169,45 @@ a:hover {
   text-decoration: underline;
 }
 
+a:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+a:visited {
+  color: var(--link-color);
+}
+
 /* buttons */
 p.button-wrapper {
   margin: 12px 0;
 }
 
-a.button:any-link,
+/* EDS button reset: neutralize default authored links styled as buttons */
+main .button-container { display: inline; }
+
+main a.button:any-link {
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--link-color);
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+  white-space: normal;
+}
+
+/*
+ * Brand button variants (source: wknd-trendsetters pill buttons).
+ * Applied only to explicit variant classes so the reset above stays the
+ * baseline for plain authored links.
+ */
+a.button.primary:any-link,
+a.button.secondary:any-link,
+a.button.outline:any-link,
+a.button.accent:any-link,
 button.button {
   box-sizing: border-box;
   display: inline-flex;
@@ -182,104 +215,100 @@ button.button {
   justify-content: center;
   max-width: 100%;
   margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font: inherit;
-  font-weight: 500;
-  line-height: 1.25;
+  border: var(--button-border-width) solid transparent;
+  border-radius: var(--button-radius);
+  padding: var(--button-padding);
+  font-family: var(--body-font-family);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: 1.6;
   text-decoration: none;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--button-shadow);
+  transition: var(--button-transition);
+}
+
+a.button.primary:hover,
+a.button.secondary:hover,
+a.button.outline:hover,
+a.button.accent:hover,
+a.button.primary:focus-visible,
+a.button.secondary:focus-visible,
+a.button.outline:focus-visible,
+a.button.accent:focus-visible,
+button.button:hover,
+button.button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--button-shadow-hover);
+}
+
+a.button.primary:active,
+a.button.secondary:active,
+a.button.outline:active,
+a.button.accent:active,
+button.button:active {
+  transform: translate(0, 0);
+  box-shadow: var(--button-shadow-active);
 }
 
 a.button[aria-disabled="true"],
 button.button:disabled {
   cursor: not-allowed;
   pointer-events: none;
+  opacity: 0.5;
 }
 
-a.button.primary,
+/* primary: filled black */
+a.button.primary:any-link,
 button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
+  border-color: var(--brand-dark);
+  background-color: var(--brand-dark);
   color: var(--background-color);
 }
 
-a.button.primary:hover,
-a.button.primary:focus-visible,
-button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
-}
-
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-a.button.secondary,
+/* secondary: white fill, black border */
+a.button.secondary:any-link,
 button.button.secondary {
-  border-color: var(--text-color);
-  background-color: transparent;
+  border-color: var(--brand-dark);
+  background-color: var(--background-color);
   color: var(--text-color);
 }
 
-a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--light-color);
-  color: var(--dark-color);
+/* outline: transparent fill, black border, no shadow */
+a.button.outline:any-link,
+button.button.outline {
+  border-color: var(--brand-dark);
+  background-color: transparent;
+  color: var(--text-color);
+  box-shadow: none;
 }
 
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+a.button.outline:hover,
+a.button.outline:focus-visible,
+button.button.outline:hover,
+button.button.outline:focus-visible {
+  background-color: var(--brand-dark);
+  color: var(--background-color);
+  box-shadow: none;
+  transform: none;
 }
 
-/* high-impact call-to-action */
-a.button.accent,
+/* accent / high-impact call-to-action: filled black */
+a.button.accent:any-link,
 button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
+  border-color: var(--brand-dark);
+  background-color: var(--brand-dark);
   color: var(--background-color);
 }
 
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-}
-
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+/* inverse variant for dark sections */
+.section.dark a.button.secondary:any-link,
+.section.inverse a.button.secondary:any-link {
+  border-color: var(--background-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: rgb(255 255 255 / 30%) 4px 4px 0 0;
 }
 
 main img {
@@ -305,7 +334,7 @@ main > .section {
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--content-max-width, 1200px);
   margin: auto;
   padding: 0 24px;
 }
@@ -322,8 +351,214 @@ main > .section:first-of-type {
 
 /* section metadata */
 main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
+main .section.highlight,
+main .section.secondary,
+main .section.secondary-section {
+  background-color: var(--brand-light);
   margin: 0;
-  padding: 40px 0;
+  padding: var(--section-padding) 0;
 }
+
+main .section.dark,
+main .section.inverse,
+main .section.inverse-section {
+  background-color: var(--brand-dark);
+  color: #fff;
+  margin: 0;
+  padding: var(--section-padding) 0;
+}
+
+main .section.accent,
+main .section.accent-section {
+  background-color: var(--brand-accent);
+  color: #000;
+  margin: 0;
+  padding: var(--section-padding) 0;
+}
+
+main .section.accent > .default-content-wrapper,
+main .section.accent-section > .default-content-wrapper {
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* accent band CTA: a link-only paragraph rendered as a filled black pill
+   button (source: subscribe band .btn-primary). */
+main .section.accent > .default-content-wrapper p:has(> a:only-child),
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) {
+  margin-top: 24px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.accent > .default-content-wrapper p:has(> a:only-child) a,
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 2px solid var(--brand-dark);
+  border-radius: 9999px;
+  background-color: var(--brand-dark);
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0 0 var(--brand-dark);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+main .section.accent > .default-content-wrapper p:has(> a:only-child) a:hover,
+main .section.accent > .default-content-wrapper p:has(> a:only-child) a:focus-visible,
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) a:hover,
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) a:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--brand-dark);
+  text-decoration: none;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark h4,
+main .section.dark h5,
+main .section.dark h6,
+main .section.inverse h1,
+main .section.inverse h2,
+main .section.inverse h3,
+main .section.inverse h4,
+main .section.inverse h5,
+main .section.inverse h6,
+main .section.inverse-section :is(h1, h2, h3, h4, h5, h6) {
+  color: #fff;
+}
+
+/* stylelint-disable no-descending-specificity */
+main .section.dark a:any-link,
+main .section.inverse a:any-link,
+main .section.inverse-section a:any-link {
+  color: #fff;
+}
+
+/* stylelint-enable no-descending-specificity */
+
+/* Secondary sections use centered intro copy for default content (headings +
+   subtitle), matching the source (.utility-text-align-center on the intro div).
+   Blocks inside the section render their own content and are unaffected because
+   they are not wrapped in .default-content-wrapper. */
+main .section.secondary > .default-content-wrapper,
+main .section.secondary-section > .default-content-wrapper {
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Blog-article long-form body (scoped to main.blog-article, set in scripts.js
+   for /blog/<slug> pages). Source: .blog-content in a 768px container giving a
+   ~720px prose measure. These rules only touch default-content + the spec block
+   inside article pages; the columns-article header (its own wrapper) and all
+   other templates are unaffected.
+   --------------------------------------------------------------------------- */
+
+/* These article-body selectors are scoped to a different context than the
+   .section.accent rules above; the ordering warning is a false positive. */
+/* stylelint-disable no-descending-specificity */
+
+/* Constrain prose measure to the source 768px container (720px text). */
+main.blog-article .default-content-wrapper,
+main.blog-article .spec-wrapper {
+  max-width: 768px;
+}
+
+/* Body copy: source 16px / line-height 1.7, 20px paragraph rhythm. */
+main.blog-article .default-content-wrapper p {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Section headings (mobile-first): source mobile 24px h2 / 22px h3, scaling to
+   40px / 32px on desktop. Generous top spacing for reading rhythm. */
+main.blog-article .default-content-wrapper h2 {
+  margin: 40px 0 16px;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+main.blog-article .default-content-wrapper h3 {
+  margin: 32px 0 12px;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+/* Lists: source 24px indent, 8px between items, 20px block rhythm. */
+main.blog-article .default-content-wrapper :is(ul, ol) {
+  margin: 0 0 20px;
+  padding-left: 24px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+main.blog-article .default-content-wrapper li {
+  margin-bottom: 8px;
+}
+
+/* Inline article images: source 20px radius, 32px vertical rhythm. */
+main.blog-article .default-content-wrapper p:has(> picture),
+main.blog-article .default-content-wrapper p:has(> img) {
+  margin: 0 0 20px;
+}
+
+main.blog-article .default-content-wrapper :is(picture, img) {
+  border-radius: 20px;
+}
+
+main.blog-article .default-content-wrapper p img {
+  display: block;
+  width: 100%;
+  margin: 32px 0;
+}
+
+/* Blockquote: source lime left rule, italic, muted ink, 32px rhythm. */
+main.blog-article .default-content-wrapper blockquote {
+  margin: 32px 0;
+  padding-left: 24px;
+  border-left: 4px solid var(--brand-accent);
+  color: #404040;
+  font-style: italic;
+}
+
+main.blog-article .default-content-wrapper blockquote p {
+  margin: 0;
+}
+
+/* Spec block: source renders a compact 2-column table (label | detail). The
+   authored div.spec becomes stacked rows; lay them out as a label/value grid. */
+main.blog-article .spec {
+  display: grid;
+  gap: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+main.blog-article .spec > div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 24px;
+  align-items: baseline;
+  padding: 4px 0;
+}
+
+@media (width >= 900px) {
+  main.blog-article .default-content-wrapper h2 {
+    font-size: 40px;
+  }
+
+  main.blog-article .default-content-wrapper h3 {
+    font-size: 32px;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */

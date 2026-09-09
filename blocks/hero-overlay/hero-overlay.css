@@ -1,0 +1,145 @@
+/*
+ * hero-overlay -- closing CTA banner
+ * Source: https://wknd-trendsetters.site/about-us (.grid-layout.desktop-1-column)
+ * Full-bleed cover image + dark gradient overlay + white heading/subheading/CTA.
+ * Values extracted from source computed styles (see migration-work/hero-overlay-extracted.css).
+ * Block sits inside the standard section container (max-width 1200 / padded), matching source.
+ */
+
+.hero-overlay {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 35rem; /* source rendered height ~559px */
+  border-radius: 1.25rem; /* --radius-card */
+  overflow: hidden;
+  color: #fff;
+}
+
+/* dark gradient overlay (source: .overlay) */
+.hero-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgb(0 0 0 / 70%) 0%, transparent 60%);
+}
+
+/* image row -- fills the card behind everything */
+.hero-overlay > div:first-child {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
+
+/* content row -- card body (source: .card-body.utility-max-width-lg) */
+.hero-overlay > div:last-child {
+  position: relative;
+  z-index: 2;
+  max-width: 34rem; /* source card-body content width ~544px */
+  margin: 0;
+  padding: 2rem;
+}
+
+.hero-overlay > div:first-child > div,
+.hero-overlay > div:first-child picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.hero-overlay > div:last-child > div {
+  margin: 0;
+}
+
+.hero-overlay > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* heading (source: h2.h1-heading -> --text-5xl) */
+.hero-overlay h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* subheading (source: p.subheading -> --text-lg) */
+.hero-overlay p {
+  margin: 1rem 0 0; /* --space-md */
+  font-family: var(--body-font-family);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #fff;
+}
+
+/* CTA container -- the project's decorateButtons only buttonizes links wrapped
+   in <strong>/<em>, so the authored "See more" (<p><a>See more</a></p>) stays a
+   bare anchor and never gets .button-container / a.button. Match either shape:
+   the button-container class OR any paragraph whose sole content is the CTA link.
+   Source button-group has margin-top --space-xl (2rem). */
+.hero-overlay .button-container,
+.hero-overlay > div:last-child p:has(> a:only-child) {
+  margin: 2rem 0 0;
+}
+
+/* inverse pill button (source: .button.inverse-button) -- override global button reset.
+   Applies to a decorated a.button as well as the bare CTA anchor. */
+main .hero-overlay a.button:any-link,
+main .hero-overlay > div:last-child p:has(> a:only-child) > a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #fff;
+  border-radius: 9999px;
+  background: #fff;
+  color: #000;
+  font-family: var(--body-font-family);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0 0 rgb(255 255 255 / 30%);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+main .hero-overlay a.button:any-link:hover,
+main .hero-overlay a.button:any-link:focus-visible,
+main .hero-overlay > div:last-child p:has(> a:only-child) > a:any-link:hover,
+main .hero-overlay > div:last-child p:has(> a:only-child) > a:any-link:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 rgb(255 255 255 / 30%);
+  text-decoration: none;
+}
+
+main .hero-overlay a.button:any-link:active,
+main .hero-overlay > div:last-child p:has(> a:only-child) > a:any-link:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 0 rgb(255 255 255 / 30%);
+}
+
+@media (width >= 900px) {
+  /* card body padding --space-3xl (4rem) at desktop */
+  .hero-overlay > div:last-child {
+    padding: 4rem;
+  }
+
+  /* heading scales up to --text-5xl (3.5rem) */
+  .hero-overlay h2 {
+    font-size: 3.5rem;
+  }
+}

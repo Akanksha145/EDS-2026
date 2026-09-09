@@ -1,0 +1,187 @@
+/* columns-article -- article header: cover image + breadcrumb/heading/byline
+ * Design extracted from source computed styles:
+ * https://wknd-trendsetters.site/about-us  (.grid-layout.tablet-1-column.grid-gap-lg)
+ */
+
+/* Row: stacked on mobile, 2-col grid on desktop (source: repeat(2,1fr), gap 24px, align-items center) */
+.columns-article > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px; /* --space-lg = 1.5rem */
+  align-items: center;
+}
+
+/* Cover image (source: .cover-image.utility-aspect-3x2, radius 20px) */
+.columns-article .columns-article-img-col picture {
+  display: block;
+  width: 100%;
+}
+
+.columns-article .columns-article-img-col img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px; /* --radius-card = 1.25rem */
+}
+
+/* Heading (source: .h2-heading -> text-4xl, Syncopate 700, uppercase, line-height 1.1).
+ * Blog-article headers author the title as an h1; article-listing/about-us use h2. */
+.columns-article :is(h1, h2) {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.8px; /* source h1/.h2-heading tracking */
+  text-transform: uppercase;
+  font-size: 24px; /* mobile: source .h2-heading = 24px */
+  color: var(--text-color);
+}
+
+/* Byline (source: "By <author>" 16px, "By" muted / author black, margin-top 1rem) */
+.columns-article .columns-article-byline {
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.columns-article .columns-article-by {
+  color: var(--link-color); /* #666 */
+}
+
+/* Date + read-time meta line (source: .paragraph-sm muted, margin-top 0.5rem) */
+.columns-article .columns-article-metaline {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--link-color); /* #666 */
+}
+
+/* Legacy 2-paragraph byline (about-us): keep prior compact styling */
+.columns-article :is(h1, h2) + p {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.columns-article :is(h1, h2) + p + p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--link-color);
+}
+
+/* Breadcrumb (source: .breadcrumbs -> text-link 16px/500, chevron separator,
+ * secondary link #666). Placed after byline rules to preserve source order. */
+.columns-article p:has(a[href]) {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.columns-article p:has(a[href]) a {
+  color: var(--text-color);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.columns-article p:has(a[href]) a:not(:first-child) {
+  color: #666; /* --color-gray-500 secondary link */
+}
+
+.columns-article p:has(a[href]) a + a::before {
+  content: '\203A'; /* › chevron separator */
+  margin: 0 8px;
+  color: #666;
+  font-weight: 400;
+}
+
+/* Featured meta line: lime category pill + muted date (source: article-listing
+ * featured card). Only present when the meta paragraph matched "<label> <date>". */
+.columns-article .columns-article-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* --space-sm */
+  margin: 0 0 16px; /* source margin-bottom 16px (listing featured card) */
+}
+
+/* When the pill follows the byline stack (blog-article header), the source
+   spaces it below the meta line rather than above the heading. */
+.columns-article .columns-article-metaline + .columns-article-meta {
+  margin: 16px 0 0;
+}
+
+.columns-article .columns-article-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-family: var(--body-font-family);
+  font-size: 12px; /* --text-xs */
+  font-weight: 600;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* source 0.6px */
+  border-radius: 9999px;
+  background-color: #f4fe8b; /* --color-yellow */
+  color: #000;
+}
+
+.columns-article .columns-article-date {
+  font-family: var(--body-font-family);
+  font-size: 14px; /* --text-sm */
+  line-height: 1.6;
+  color: #666; /* --color-gray-500 */
+}
+
+/* Trailing CTA styled as a filled black pill button (source: .btn-primary) */
+.columns-article .columns-article-cta {
+  margin: 24px 0 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.columns-article .columns-article-cta a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 2px solid var(--brand-dark);
+  border-radius: 9999px;
+  background-color: var(--brand-dark);
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  font-size: 14px; /* --text-sm */
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0 0 var(--brand-dark); /* --shadow-button */
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* stylelint-disable no-descending-specificity */
+.columns-article .columns-article-cta a:hover,
+.columns-article .columns-article-cta a:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--brand-dark);
+  text-decoration: none;
+}
+
+.columns-article .columns-article-cta a:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 0 var(--brand-dark);
+}
+
+/* stylelint-enable no-descending-specificity */
+
+@media (width >= 900px) {
+  .columns-article > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .columns-article :is(h1, h2) {
+    font-size: 40px; /* source desktop text-4xl = 2.5rem */
+  }
+}
