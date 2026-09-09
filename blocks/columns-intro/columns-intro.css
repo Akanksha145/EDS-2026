@@ -49,9 +49,15 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 2; /* source inline aspect-ratio: 3/2 */
+  aspect-ratio: 3 / 2; /* source inline aspect-ratio: 3/2 (multi-image about-us) */
   object-fit: cover;
   border-radius: 1.25rem; /* --radius-card = 20px */
+}
+
+/* single-image intro (e.g. /faq hero): the source uses one 4/3 cover image
+ * that fills the whole column, not the staggered multi-image grid. */
+.columns-intro-img-col:not(:has(p:nth-of-type(2))) img {
+  aspect-ratio: 4 / 3;
 }
 
 /* ---- button group: the paragraph that holds the two CTA links ---- */
@@ -94,8 +100,9 @@
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* second CTA = secondary button (white fill, black text) */
-.columns-intro p:has(a) a:last-child {
+/* second CTA = secondary button (white fill, black text).
+   A lone CTA stays filled black (source), so exclude the first child. */
+.columns-intro p:has(a) a:not(:first-child) {
   background-color: var(--background-color);
   color: var(--text-color);
 }
@@ -110,6 +117,64 @@
 .columns-intro p:has(a) a:active {
   transform: translate(0, 0);
   box-shadow: 2px 2px 0 0 var(--brand-dark);
+}
+
+/* ---- contact-block variant (e.g. /faq "Let's connect") ----
+ * When a column holds h3 labels (Email/Phone/Address) with plain contact
+ * links, the source renders small uppercase labels above plain text links,
+ * NOT the pill CTA buttons used elsewhere. Scope by the presence of h3 so the
+ * about-us/homepage CTA buttons are unaffected. Top-align the row (source). */
+.columns-intro > div:has(h3) {
+  align-items: start;
+}
+
+.columns-intro > div > div:has(h3) h3 {
+  margin: 1.5rem 0 0.5rem; /* stacked labels, --space-lg top / --space-xs bottom */
+  font-family: var(--heading-font-family);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #666; /* source rgb(102,102,102) */
+}
+
+.columns-intro > div > div:has(h3) h3:first-child {
+  margin-top: 0;
+}
+
+/* un-button the contact links: plain 18px text links (source) */
+/* stylelint-disable-next-line no-descending-specificity */
+.columns-intro > div > div:has(h3) p:has(a) {
+  display: block;
+  gap: 0;
+  margin: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.columns-intro > div > div:has(h3) p:has(a) a {
+  display: inline;
+  width: auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 1.125rem; /* 18px */
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left;
+  white-space: normal;
+}
+
+.columns-intro > div > div:has(h3) p:has(a) a:hover,
+.columns-intro > div > div:has(h3) p:has(a) a:focus-visible,
+.columns-intro > div > div:has(h3) p:has(a) a:active {
+  transform: none;
+  box-shadow: none;
+  text-decoration: underline;
 }
 
 /* ---- tablet: CTAs side by side (source >=768px) ---- */
@@ -133,9 +198,10 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* image column becomes a 2-across grid: images 1 & 2 on the top row,
-     image 3 bottom-left, matching the source's nested 2-column grid */
-  .columns-intro-img-col {
+  /* multi-image column becomes a 2-across grid: images 1 & 2 on the top row,
+     image 3 bottom-left, matching the source's nested 2-column grid.
+     A single-image column (e.g. /faq hero) stays 1fr so the image fills it. */
+  .columns-intro-img-col:has(p:nth-of-type(2)) {
     grid-template-columns: repeat(2, 1fr);
   }
 

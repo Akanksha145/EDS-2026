@@ -10,7 +10,7 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: 28rem;
+  min-height: 35rem; /* source rendered height ~559px */
   border-radius: 1.25rem; /* --radius-card */
   overflow: hidden;
   color: #fff;
@@ -37,7 +37,7 @@
 .hero-overlay > div:last-child {
   position: relative;
   z-index: 2;
-  max-width: 42rem;
+  max-width: 34rem; /* source card-body content width ~544px */
   margin: 0;
   padding: 2rem;
 }

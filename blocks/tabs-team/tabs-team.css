@@ -25,7 +25,41 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  align-items: center;
+  align-items: start;
+}
+
+/* Text column: name, role, quote stacked together at the top. */
+.tabs-team .tabs-team-panel-text {
+  display: block;
+}
+
+.tabs-team .tabs-team-panel-text p {
+  margin: 0;
+}
+
+/* Member name (bold). */
+.tabs-team .tabs-team-panel-text > p:first-child {
+  font-size: 20px; /* source paragraph-xl */
+  line-height: 1.6;
+}
+
+.tabs-team .tabs-team-panel-text > p:first-child strong {
+  font-weight: 700;
+}
+
+/* Role subtitle. */
+.tabs-team .tabs-team-panel-text > p:nth-child(2) {
+  margin: 0 0 32px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* Testimonial quote. */
+.tabs-team .tabs-team-panel-text > p:last-child {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--text-color);
 }
 
 /* First paragraph holds the member image (EDS wraps picture in <p>). */
@@ -47,33 +81,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-/* Member name (bold). */
-.tabs-team .tabs-team-body > div > p:nth-child(2) {
-  margin: 0;
-  font-size: 20px; /* source paragraph-xl */
-  line-height: 1.6;
-}
-
-.tabs-team .tabs-team-body > div > p:nth-child(2) strong {
-  font-weight: 700;
-}
-
-/* Role subtitle. */
-.tabs-team .tabs-team-body > div > p:nth-child(3) {
-  margin: 0 0 32px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text-color);
-}
-
-/* Testimonial quote. */
-.tabs-team .tabs-team-body > div > p:last-child {
-  margin: 0 0 48px;
-  font-size: 20px;
-  line-height: 1.6;
-  color: var(--text-color);
 }
 
 /* ---------- Tab selector row ---------- */
@@ -100,7 +107,7 @@
   padding: 16px;
   border: 1px solid #e8e8e8;
   border-radius: 16px;
-  background-color: var(--background-color);
+  background-color: #efefef; /* source inactive tab fill */
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: 14px;
@@ -173,17 +180,15 @@
 @media (width >= 900px) {
   .tabs-team .tabs-team-body > div {
     grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
   }
 
-  /* Image occupies column 1 across all text rows; text stacks in column 2. */
+  /* Image in column 1, member text stacked in column 2. */
   .tabs-team .tabs-team-body > div > p:first-child {
     grid-column: 1;
-    grid-row: 1 / span 3;
   }
 
-  .tabs-team .tabs-team-body > div > p:nth-child(2),
-  .tabs-team .tabs-team-body > div > p:nth-child(3),
-  .tabs-team .tabs-team-body > div > p:last-child {
+  .tabs-team .tabs-team-panel-text {
     grid-column: 2;
   }
 

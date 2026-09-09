@@ -383,6 +383,43 @@ main .section.accent-section > .default-content-wrapper {
   text-align: center;
 }
 
+/* accent band CTA: a link-only paragraph rendered as a filled black pill
+   button (source: subscribe band .btn-primary). */
+main .section.accent > .default-content-wrapper p:has(> a:only-child),
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) {
+  margin-top: 24px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.accent > .default-content-wrapper p:has(> a:only-child) a,
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 2px solid var(--brand-dark);
+  border-radius: 9999px;
+  background-color: var(--brand-dark);
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 4px 4px 0 0 var(--brand-dark);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+main .section.accent > .default-content-wrapper p:has(> a:only-child) a:hover,
+main .section.accent > .default-content-wrapper p:has(> a:only-child) a:focus-visible,
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) a:hover,
+main .section.accent-section > .default-content-wrapper p:has(> a:only-child) a:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--brand-dark);
+  text-decoration: none;
+}
+
 main .section.dark h1,
 main .section.dark h2,
 main .section.dark h3,
@@ -399,11 +436,14 @@ main .section.inverse-section :is(h1, h2, h3, h4, h5, h6) {
   color: #fff;
 }
 
+/* stylelint-disable no-descending-specificity */
 main .section.dark a:any-link,
 main .section.inverse a:any-link,
 main .section.inverse-section a:any-link {
   color: #fff;
 }
+
+/* stylelint-enable no-descending-specificity */
 
 /* Secondary sections use centered intro copy for default content (headings +
    subtitle), matching the source (.utility-text-align-center on the intro div).
@@ -413,3 +453,112 @@ main .section.secondary > .default-content-wrapper,
 main .section.secondary-section > .default-content-wrapper {
   text-align: center;
 }
+
+/* ---------------------------------------------------------------------------
+   Blog-article long-form body (scoped to main.blog-article, set in scripts.js
+   for /blog/<slug> pages). Source: .blog-content in a 768px container giving a
+   ~720px prose measure. These rules only touch default-content + the spec block
+   inside article pages; the columns-article header (its own wrapper) and all
+   other templates are unaffected.
+   --------------------------------------------------------------------------- */
+
+/* These article-body selectors are scoped to a different context than the
+   .section.accent rules above; the ordering warning is a false positive. */
+/* stylelint-disable no-descending-specificity */
+
+/* Constrain prose measure to the source 768px container (720px text). */
+main.blog-article .default-content-wrapper,
+main.blog-article .spec-wrapper {
+  max-width: 768px;
+}
+
+/* Body copy: source 16px / line-height 1.7, 20px paragraph rhythm. */
+main.blog-article .default-content-wrapper p {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Section headings (mobile-first): source mobile 24px h2 / 22px h3, scaling to
+   40px / 32px on desktop. Generous top spacing for reading rhythm. */
+main.blog-article .default-content-wrapper h2 {
+  margin: 40px 0 16px;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+main.blog-article .default-content-wrapper h3 {
+  margin: 32px 0 12px;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+/* Lists: source 24px indent, 8px between items, 20px block rhythm. */
+main.blog-article .default-content-wrapper :is(ul, ol) {
+  margin: 0 0 20px;
+  padding-left: 24px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+main.blog-article .default-content-wrapper li {
+  margin-bottom: 8px;
+}
+
+/* Inline article images: source 20px radius, 32px vertical rhythm. */
+main.blog-article .default-content-wrapper p:has(> picture),
+main.blog-article .default-content-wrapper p:has(> img) {
+  margin: 0 0 20px;
+}
+
+main.blog-article .default-content-wrapper :is(picture, img) {
+  border-radius: 20px;
+}
+
+main.blog-article .default-content-wrapper p img {
+  display: block;
+  width: 100%;
+  margin: 32px 0;
+}
+
+/* Blockquote: source lime left rule, italic, muted ink, 32px rhythm. */
+main.blog-article .default-content-wrapper blockquote {
+  margin: 32px 0;
+  padding-left: 24px;
+  border-left: 4px solid var(--brand-accent);
+  color: #404040;
+  font-style: italic;
+}
+
+main.blog-article .default-content-wrapper blockquote p {
+  margin: 0;
+}
+
+/* Spec block: source renders a compact 2-column table (label | detail). The
+   authored div.spec becomes stacked rows; lay them out as a label/value grid. */
+main.blog-article .spec {
+  display: grid;
+  gap: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+main.blog-article .spec > div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 24px;
+  align-items: baseline;
+  padding: 4px 0;
+}
+
+@media (width >= 900px) {
+  main.blog-article .default-content-wrapper h2 {
+    font-size: 40px;
+  }
+
+  main.blog-article .default-content-wrapper h3 {
+    font-size: 32px;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */

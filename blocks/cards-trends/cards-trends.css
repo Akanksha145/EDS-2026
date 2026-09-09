@@ -3,6 +3,13 @@
  * Each card: cover image + category pill + title + short description, whole card links.
  */
 
+/* "Trend alert" intro (heading + subtitle) sits above the grid in the same
+ * section and is centered in the source. cards-trends is unique to this page,
+ * so scoping the centering to its section is safe. */
+main .section:has(> div > .cards-trends) > .default-content-wrapper {
+  text-align: center;
+}
+
 .cards-trends > ul {
   list-style: none;
   margin: 0;
@@ -36,7 +43,7 @@
 
 /* image */
 .cards-trends .cards-trends-card-image {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 4 / 3; /* source .trend-card-image */
   overflow: hidden;
   line-height: 0;
 }

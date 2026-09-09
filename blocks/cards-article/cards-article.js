@@ -26,7 +26,8 @@ export default function decorate(block) {
         const meta = document.createElement('div');
         meta.className = 'cards-article-card-meta';
         const text = metaP.textContent.trim();
-        const m = text.match(/^(.*?)\s+([A-Z][a-z]{2,9}\.?\s+\d{1,2})$/);
+        // Category words followed by a date like "June 12" or "February 22, 2026".
+        const m = text.match(/^(.*?)\s+([A-Z][a-z]{2,9}\.?\s+\d{1,2}(?:,\s*\d{4})?)$/);
         if (m) {
           const [, category, dateText] = m;
           const tag = document.createElement('span');

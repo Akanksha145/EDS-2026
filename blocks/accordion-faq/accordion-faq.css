@@ -11,6 +11,45 @@
   gap: 8px; /* --space-xs */
 }
 
+/*
+ * Standalone /faq accordion (no heading column): the source centers the list
+ * in a 768px-wide column (max-width 768px + 24px side padding => 720px items),
+ * NOT full page width. Scope to accordion sections without a default-content
+ * intro so the two-column about-us/homepage layout is unaffected.
+ */
+main .section.accordion-faq-container:not(:has(.default-content-wrapper)) .accordion-faq {
+  max-width: 768px;
+  padding: 0 24px;
+  margin-inline: auto;
+}
+
+/*
+ * Two-column FAQ section layout (source: .grid-layout.tablet-1-column.grid-gap-xxl).
+ * On desktop the section heading/intro sits in the left column and the accordion
+ * in the right column, split 1fr/1fr with a 64px (--space-xxl) gap, aligned to top.
+ * Scoped to sections that pair a default-content-wrapper with the accordion so the
+ * standalone /faq accordion (no heading column) is unaffected.
+ * Mobile stays single-column (source collapses via tablet-1-column).
+ */
+@media (width >= 900px) {
+  main .section.accordion-faq-container:has(.default-content-wrapper) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px; /* --space-xxl */
+    align-items: start;
+    max-width: var(--content-max-width, 1200px);
+    margin-inline: auto;
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  main .section.accordion-faq-container:has(.default-content-wrapper) > div {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .accordion-faq .accordion-faq-item {
   border: 1px solid #e8e8e8; /* --color-gray-200 */
   border-radius: 16px; /* --radius-lg */
@@ -31,6 +70,12 @@
   list-style: none;
   cursor: pointer;
   transition: background-color 0.15s ease;
+}
+
+/* the label text is wrapped in a <p>; strip default margins so the row
+ * height matches the source (source uses a bare <span>) */
+.accordion-faq .accordion-faq-item-label p {
+  margin: 0;
 }
 
 .accordion-faq .accordion-faq-item-label:hover {
@@ -66,4 +111,35 @@
 
 .accordion-faq .accordion-faq-item-body p {
   margin: 0;
+}
+
+/*
+ * Two-column FAQ section layout (matches source .grid-layout.tablet-1-column):
+ * when the accordion section also has a default-content intro (heading +
+ * subtitle), lay the intro on the left and the accordion on the right.
+ * Scoped to sections that contain BOTH the intro and the accordion, so the
+ * standalone /faq accordion (no default-content-wrapper) is unaffected.
+ */
+main .section.accordion-faq-container:has(> .default-content-wrapper):has(> .accordion-faq-wrapper) {
+  display: grid;
+  gap: 40px;
+  max-width: var(--content-max-width, 1200px);
+  margin: 0 auto;
+  padding: var(--section-padding) 24px;
+  align-items: start;
+}
+
+main .section.accordion-faq-container:has(> .default-content-wrapper):has(> .accordion-faq-wrapper) > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (width >= 900px) {
+  main .section.accordion-faq-container:has(> .default-content-wrapper):has(> .accordion-faq-wrapper) {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px; /* --space-xxl */
+    padding-right: 32px;
+    padding-left: 32px;
+  }
 }

@@ -42,6 +42,22 @@ export default async function decorate(block) {
     });
     tablist.append(button);
     tab.remove();
+
+    // Group the member text (name/role/quote) in the remaining panel cell so it
+    // stacks at the top of the text column instead of being distributed across
+    // equal-height grid rows (matches the source layout).
+    const panelInner = tabpanel.firstElementChild;
+    if (panelInner) {
+      const paras = [...panelInner.children].filter((el) => el.tagName === 'P');
+      const imageP = paras.find((p) => p.querySelector('picture, img'));
+      const textParas = paras.filter((p) => p !== imageP);
+      if (textParas.length) {
+        const textWrap = document.createElement('div');
+        textWrap.className = 'tabs-team-panel-text';
+        textParas[0].before(textWrap);
+        textParas.forEach((p) => textWrap.append(p));
+      }
+    }
   });
 
   block.prepend(tablist);
