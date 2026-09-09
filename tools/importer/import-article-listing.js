@@ -3,8 +3,11 @@
 
 // PARSER IMPORTS
 import cardsArticleParser from './parsers/cards-article.js';
+import cardsGalleryParser from './parsers/cards-gallery.js';
 import columnsArticleParser from './parsers/columns-article.js';
 import columnsIntroParser from './parsers/columns-intro.js';
+import heroOverlayParser from './parsers/hero-overlay.js';
+import tabsTeamParser from './parsers/tabs-team.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-trendsetters-cleanup.js';
@@ -21,19 +24,38 @@ const PAGE_TEMPLATE = {
     {
       name: 'columns-intro',
       instances: [
-        '#main-content > header.section.secondary-section > div.container > div.grid-layout.tablet-1-column.grid-gap-xxl',
+        '#main-content header.section div.grid-layout.tablet-1-column.grid-gap-xxl',
       ],
     },
     {
       name: 'columns-article',
       instances: [
-        '#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout.tablet-1-column.grid-gap-lg',
+        '#main-content div.grid-layout.tablet-1-column.grid-gap-lg:not([class*="desktop-"])',
       ],
     },
     {
       name: 'cards-article',
       instances: [
-        '#articles > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md',
+        '#main-content div.grid-layout.desktop-4-column.grid-gap-md',
+      ],
+    },
+    {
+      name: 'cards-gallery',
+      instances: [
+        '#main-content div.grid-layout.desktop-4-column.grid-gap-sm',
+        '#main-content div.grid-layout.desktop-3-column.grid-gap-sm',
+      ],
+    },
+    {
+      name: 'tabs-team',
+      instances: [
+        '#main-content div.tabs-wrapper',
+      ],
+    },
+    {
+      name: 'hero-overlay',
+      instances: [
+        '#main-content div.grid-layout.desktop-1-column',
       ],
     },
   ],
@@ -58,6 +80,9 @@ const parsers = {
   'columns-intro': columnsIntroParser,
   'columns-article': columnsArticleParser,
   'cards-article': cardsArticleParser,
+  'cards-gallery': cardsGalleryParser,
+  'tabs-team': tabsTeamParser,
+  'hero-overlay': heroOverlayParser,
 };
 
 // TRANSFORMER REGISTRY - cleanup first, then section breaks/metadata (afterTransform)

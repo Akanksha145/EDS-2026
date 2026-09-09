@@ -25,43 +25,44 @@ const PAGE_TEMPLATE = {
     {
       name: 'columns-intro',
       instances: [
-        '#main-content > header.section.secondary-section > div.container > div.grid-layout.tablet-1-column.grid-gap-xxl',
+        '#main-content header.section div.grid-layout.tablet-1-column.grid-gap-xxl',
       ],
     },
     {
       name: 'columns-article',
       instances: [
-        '#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout.tablet-1-column.grid-gap-lg',
+        '#main-content div.grid-layout.tablet-1-column.grid-gap-lg:not([class*="desktop-"])',
       ],
     },
     {
       name: 'cards-gallery',
       instances: [
-        '#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-sm',
+        '#main-content div.grid-layout.desktop-4-column.grid-gap-sm',
+        '#main-content div.grid-layout.desktop-3-column.grid-gap-sm',
       ],
     },
     {
       name: 'tabs-team',
       instances: [
-        '#main-content > section.section:nth-of-type(3) > div.container > div.tabs-wrapper',
+        '#main-content div.tabs-wrapper',
       ],
     },
     {
       name: 'cards-article',
       instances: [
-        '#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md',
+        '#main-content div.grid-layout.desktop-4-column.grid-gap-md',
       ],
     },
     {
       name: 'accordion-faq',
       instances: [
-        '#main-content > section.section:nth-of-type(5) div.faq-list',
+        '#main-content div.faq-list',
       ],
     },
     {
       name: 'hero-overlay',
       instances: [
-        '#main-content > section.section.inverse-section > div.container > div.grid-layout.desktop-1-column',
+        '#main-content div.grid-layout.desktop-1-column',
       ],
     },
   ],

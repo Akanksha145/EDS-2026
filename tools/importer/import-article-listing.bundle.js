@@ -69,14 +69,35 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/columns-article.js
+  // tools/importer/parsers/cards-gallery.js
   function parse2(element, { document: document2 }) {
+    const items = element.querySelectorAll(":scope > div");
+    const cells = [];
+    items.forEach((item) => {
+      const image = item.querySelector("img") || (item.tagName === "IMG" ? item : null);
+      if (!image) return;
+      const textCell = [];
+      const heading = item.querySelector("h1, h2, h3, h4, h5, h6");
+      if (heading) textCell.push(heading);
+      item.querySelectorAll("p").forEach((p) => textCell.push(p));
+      cells.push([image, textCell.length ? textCell : ""]);
+    });
+    if (cells.length === 0) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-gallery", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/columns-article.js
+  function parse3(element, { document: document2 }) {
     const columns = Array.from(element.querySelectorAll(":scope > div"));
     if (columns.length === 0) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    element.querySelectorAll(".breadcrumbs img").forEach((img) => img.remove());
+    element.querySelectorAll(".breadcrumbs img, .breadcrumbs svg").forEach((sep) => sep.remove());
     const row = columns.map((col) => {
       const contents = Array.from(col.childNodes);
       return contents.length ? contents : "";
@@ -87,7 +108,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-intro.js
-  function parse3(element, { document: document2 }) {
+  function parse4(element, { document: document2 }) {
     const columns = Array.from(element.querySelectorAll(":scope > div"));
     if (columns.length === 0) {
       element.replaceWith(...element.childNodes);
@@ -99,6 +120,57 @@ var CustomImportScript = (() => {
     });
     const cells = [row];
     const block = WebImporter.Blocks.createBlock(document2, { name: "columns-intro", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/hero-overlay.js
+  function parse5(element, { document: document2 }) {
+    const bgImage = element.querySelector("img.cover-image, img.utility-overlay, img");
+    const contentContainer = element.querySelector(".card-body") || element;
+    const heading = contentContainer.querySelector('h1, h2, h3, [class*="heading"]');
+    const subheading = contentContainer.querySelector("p, .subheading");
+    const ctaLinks = Array.from(contentContainer.querySelectorAll(".button-group a, a.button"));
+    if (!heading && !subheading && ctaLinks.length === 0 && !bgImage) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const cells = [];
+    if (bgImage) cells.push([bgImage]);
+    const contentCell = [];
+    if (heading) contentCell.push(heading);
+    if (subheading) contentCell.push(subheading);
+    contentCell.push(...ctaLinks);
+    cells.push([contentCell]);
+    const block = WebImporter.Blocks.createBlock(document2, { name: "hero-overlay", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/tabs-team.js
+  function parse6(element, { document: document2 }) {
+    const panes = Array.from(element.querySelectorAll(".tabs-content .tab-pane, .tab-pane"));
+    const menuButtons = Array.from(element.querySelectorAll(".tab-menu .tab-menu-link, .tab-menu-link"));
+    const cells = [];
+    panes.forEach((pane, i) => {
+      let label = "";
+      const button = menuButtons[i];
+      if (button) {
+        const inner = button.querySelector(":scope > div") || button;
+        const labelNodes = Array.from(inner.childNodes);
+        label = labelNodes.length ? labelNodes : inner.textContent.trim().replace(/\s+/g, " ");
+      }
+      if (!label || Array.isArray(label) && label.length === 0) {
+        const paneName = pane.querySelector("strong");
+        label = paneName ? paneName.textContent.trim() : `Tab ${i + 1}`;
+      }
+      const paneInner = pane.querySelector(":scope > .grid-layout") || pane;
+      const content = Array.from(paneInner.childNodes);
+      cells.push([label, content.length ? content : ""]);
+    });
+    if (cells.length === 0) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const block = WebImporter.Blocks.createBlock(document2, { name: "tabs-team", cells });
     element.replaceWith(block);
   }
 
@@ -160,19 +232,38 @@ var CustomImportScript = (() => {
       {
         name: "columns-intro",
         instances: [
-          "#main-content > header.section.secondary-section > div.container > div.grid-layout.tablet-1-column.grid-gap-xxl"
+          "#main-content header.section div.grid-layout.tablet-1-column.grid-gap-xxl"
         ]
       },
       {
         name: "columns-article",
         instances: [
-          "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout.tablet-1-column.grid-gap-lg"
+          '#main-content div.grid-layout.tablet-1-column.grid-gap-lg:not([class*="desktop-"])'
         ]
       },
       {
         name: "cards-article",
         instances: [
-          "#articles > div.container > div.grid-layout.desktop-4-column.tablet-2-column-1.mobile-portrait-1-column.grid-gap-md"
+          "#main-content div.grid-layout.desktop-4-column.grid-gap-md"
+        ]
+      },
+      {
+        name: "cards-gallery",
+        instances: [
+          "#main-content div.grid-layout.desktop-4-column.grid-gap-sm",
+          "#main-content div.grid-layout.desktop-3-column.grid-gap-sm"
+        ]
+      },
+      {
+        name: "tabs-team",
+        instances: [
+          "#main-content div.tabs-wrapper"
+        ]
+      },
+      {
+        name: "hero-overlay",
+        instances: [
+          "#main-content div.grid-layout.desktop-1-column"
         ]
       }
     ],
@@ -212,9 +303,12 @@ var CustomImportScript = (() => {
     ]
   };
   var parsers = {
-    "columns-intro": parse3,
-    "columns-article": parse2,
-    "cards-article": parse
+    "columns-intro": parse4,
+    "columns-article": parse3,
+    "cards-article": parse,
+    "cards-gallery": parse2,
+    "tabs-team": parse6,
+    "hero-overlay": parse5
   };
   var transformers = [
     transform,

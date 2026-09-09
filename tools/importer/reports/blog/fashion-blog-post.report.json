@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://wknd-trendsetters.site/blog/fashion-blog-post",
+  "path": "blog/fashion-blog-post",
+  "timestamp": "2026-09-09T10:27:08.366Z",
+  "title": "Game on, style up | Fashion Blog",
+  "template": "blog-article",
+  "blocks": [
+    "columns-article"
+  ]
+}
